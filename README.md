@@ -15,20 +15,13 @@ Missing values check:
 No missing values across any column after processing.
 
 Date parsing:
-
 Inspected unique values in order_date and ship_date
-
 Detected mixed date formats (DD/MM/YYYY and MM/DD/YYYY)
-
 Used two-step parsing to correctly convert both formats
-
 Dropped rows where both order_date and ship_date remained unparsed
 
 New columns created:
-
 ship_duration = days between shipping and order dates
-
 order_month = monthly period for trend analysis
-
 order_quarter = quarterly period for business summary
 
