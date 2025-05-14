@@ -1,0 +1,25 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+h1, h2, h3, .stText, .stMarkdown, .stDataFrame, label, .css-10trblm, .css-1v0mbdj, .css-1offfwp {
+    color: #ffffff !important;
+}
+
+[data-testid="stSidebar"] {
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.stDownloadButton > button {
+    background-color: #56B4E9 !important;
+    color: #fff !important;
+    border-radius: 5px;
+}
+
+/* Tabs styling */
+[data-baseweb="tab"] {
+    background-color: #333 !important;
+    color: #fff !important;
+}

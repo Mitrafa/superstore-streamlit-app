@@ -1,0 +1,24 @@
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+[data-testid="stSidebar"] {
+    background-color: #f5f5f5;
+    color: #000000;
+}
+
+h1, h2, h3, .stText, .stMarkdown, .stDataFrame {
+    color: #000000 !important;
+}
+
+button {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.stDownloadButton > button {
+    background-color: #56B4E9 !important;
+    color: #fff !important;
+    border-radius: 5px;
+}
