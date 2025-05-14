@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 # ---- Page Setup ----
 st.set_page_config(page_title="Superstore Dashboard", layout="wide")
 
+
 # ---- Load Cleaned Data ----
 @st.cache_data
 def load_data():
