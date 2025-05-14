@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # ---- Page Setup ----
 st.set_page_config(page_title="Superstore Dashboard", layout="wide")
@@ -50,6 +51,18 @@ df_filtered = df[
     (df['ship_mode'].isin(selected_ship_modes))
 ]
 
+
+download_clicked = st.sidebar.download_button(
+    label="📥 Download Filtered Data",
+    data=df_filtered.to_csv(index=False).encode('utf-8'),
+    file_name="filtered_superstore_data.csv",
+    mime="text/csv"
+)
+
+if download_clicked:
+    st.sidebar.success("File downloaded successfully!")
+
+
 # ---- Handle Empty Filters or Show Tabs ----
 if df_filtered.empty:
     st.warning("⚠️ No data to display. Please select at least one option from each filter.")
@@ -58,7 +71,13 @@ else:
     st.markdown("Use the sidebar filters to explore the dataset.")
 
     # ---- Tabs ----
-    tab1, tab2, tab3 = st.tabs(["📈 Monthly Sales & Profit", "📦 Shipping Duration", "🔴 Profit vs Sales"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "📈 Monthly Sales & Profit",
+        "📦 Shipping Duration",
+        "🔴 Profit vs Sales",
+        "🛒 Category Performance",
+        "👤 Top Customers"
+    ])
 
     with tab1:
         st.subheader("📈 Monthly Sales & Profit Trend")
@@ -102,3 +121,26 @@ else:
             ax3.set_ylabel("Profit")
             ax3.legend()
             st.pyplot(fig3)
+
+    with tab4:
+        st.subheader("🛒 Average Sales and Profit by Sub-Category")
+        subcat_summary = df_filtered.groupby('sub_category')[['sales', 'profit']].mean().sort_values(by='sales', ascending=False)
+
+        fig4, ax4 = plt.subplots(figsize=(12, 5))
+        subcat_summary[['sales', 'profit']].plot(kind='bar', ax=ax4)
+        ax4.set_title("Average Sales and Profit by Sub-Category")
+        ax4.set_xlabel("Sub-Category")
+        ax4.set_ylabel("USD Amount")
+        ax4.tick_params(axis='x', rotation=45)
+        st.pyplot(fig4)
+
+    with tab5:
+        st.subheader("👤 Top 10 Customers by Sales")
+        top_customers = df_filtered.groupby('customer_name')['sales'].sum().sort_values(ascending=False).head(10)
+
+        fig5, ax5 = plt.subplots()
+        top_customers.plot(kind='barh', ax=ax5, color='skyblue')
+        ax5.set_title("Top 10 Customers by Sales")
+        ax5.set_xlabel("Total Sales")
+        ax5.invert_yaxis()
+        st.pyplot(fig5)
