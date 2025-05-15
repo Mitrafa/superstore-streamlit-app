@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 
+
 def clean_and_transform(df: pd.DataFrame) -> pd.DataFrame:
     """Clean and transform Superstore dataset for analysis."""
 
