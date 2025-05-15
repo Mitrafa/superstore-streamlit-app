@@ -27,3 +27,9 @@ so that I can focus on specific segments of the business.
 **5. As a stakeholder,**  
 I want to download both the full and filtered datasets from the dashboard  
 so that I can use the data offline for reporting or presentations.
+
+---
+
+**6. As a stakeholder,**  
+I want to download the PNG file of all the graphs.  
+so that I can use the visualisation offline for reporting or presentations.

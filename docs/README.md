@@ -160,12 +160,67 @@ pip install -r requirements.txt
 
 ---
 
+### Optimising Query Execution and Performance
+
+As the dataset scales, the following strategies would be used to improve performance:
+
+- Convert CSV files to **Parquet** for faster read/write and lower storage.
+- Move cleaned data into a **PostgreSQL** or **Amazon Redshift** database.
+- Pre-aggregate data and cache results to reduce processing time.
+- Implement **incremental ETL** to process only new data instead of the full dataset.
+
+---
+
+### Error Handling and Logging
+
+- The ETL pipeline uses `try/except` blocks to catch:
+  - Missing files
+  - Parsing errors
+  - Data type mismatches
+- Logging is implemented using Python's built-in `logging` module.
+  - Logs when data is extracted
+  - Logs shape of data at each stage
+  - Logs errors if encountered
+- This setup supports easy debugging and future monitoring via tools like **AWS CloudWatch**.
+
+---
+
+### Security and Privacy Considerations
+
+While the current dataset doesn’t include sensitive (Except name of people) data, in a production environment I would:
+
+- Use **environment variables** or **AWS Secrets Manager** to store credentials.
+- Remove or anonymise customer identifiers from shared datasets.
+- Enforce HTTPS and secure connections when hosting the app publicly.
+
+---
+
+### Cloud Deployment and AWS Automation
+
+This project could be automated and deployed using AWS services:
+
+- **Amazon S3** — For storing raw and cleaned datasets
+- **AWS Lambda** — To automate ETL job execution
+- **Amazon MWAA (Managed Airflow)** — For orchestration
+- **Amazon RDS/Redshift** — As the data warehouse layer
+- **Amazon EC2** — For hosting the Streamlit app
+- **AWS CloudWatch** — For log tracking and performance monitoring
+- **AWS Secrets Manager** — For secure credential management
+
+This architecture supports full automation, scalability, and integration with enterprise data pipelines.
+
+---
+
 ###### Future Enhancements
 
-- Deploy to Streamlit Community Cloud
-- Add time series forecasting (e.g. Prophet)
-- Improve testing coverage and exception handling
-- Enable Excel/Parquet output formats
+- Add time series forecasting (e.g. Prophet or ARIMA)
+- Improve testing coverage and structured exception logging
+- Enable additional export formats (e.g. Excel, Parquet)
+- Store cleaned data in a **PostgreSQL** or **Amazon Redshift** database
+- Automate ETL workflow using **Apache Airflow** or **AWS Lambda**
+- Deploy Streamlit app via **EC2** or **ECS**
+- Monitor ETL performance and errors using **AWS CloudWatch**
+- Use **Secrets Manager** to securely store database/API credentials
 
 ---
 
