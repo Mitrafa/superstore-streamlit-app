@@ -4,7 +4,11 @@ Welcome to the **Superstore Sales ETL & Streamlit Dashboard** project! This proj
 
 ---
 
-###### 📁 Project Structure
+###### Live Demo
+
+[Click here to view the deployed app](https://mitra-superstore.streamlit.app/)
+
+###### Project Structure
 
 ```
 superstore-streamlit-app/
@@ -36,7 +40,7 @@ superstore-streamlit-app/
 
 ---
 
-###### 🎯 Project Objectives
+###### Project Objectives
 
 - Extract data from a raw CSV file
 - Clean and transform data using pandas
@@ -166,6 +170,9 @@ pip install -r requirements.txt
 ---
 
 
+##### Acknowledgements
+This project was created as part of my Data Engineering Capstone at Digital Futures.
+Special thanks to my mentors and peers who supported me throughout this journey.
 
 Made by **Mitra Fazel**  
 
