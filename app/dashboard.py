@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import io
 
 # ---- Page Setup ----
 st.set_page_config(page_title="Superstore Dashboard", layout="wide")
@@ -18,12 +17,14 @@ cud_palette = [
     "#999999",  # grey
 ]
 
+
 # ---- Load Cleaned Data ----
 @st.cache_data
 def load_data():
     df = pd.read_csv("data/cleaned/cleaned_superstore.csv")
     df['order_date'] = pd.to_datetime(df['order_date'])
     return df
+
 
 df = load_data()
 
