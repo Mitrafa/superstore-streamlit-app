@@ -230,5 +230,3 @@ This project was created as part of my Data Engineering Capstone at Digital Futu
 Special thanks to my mentors and peers who supported me throughout this journey.
 
 Made by **Mitra Fazel**  
-
-
