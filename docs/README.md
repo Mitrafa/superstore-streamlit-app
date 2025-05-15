@@ -1,73 +1,172 @@
-Analytical Questions
-This project aims to answer the following key business questions:
+###### 📊 Superstore Sales ETL & Dashboard Project
 
-1. How do monthly sales and profit vary over time?
+Welcome to the **Superstore Sales ETL & Streamlit Dashboard** project! This project showcases end-to-end data engineering — from raw data extraction to transformation, loading, and interactive data visualisation.
 
-2. Which shipping methods lead to longer delivery times?
+---
 
-3. How does profitability vary by product category?
+###### 📁 Project Structure
 
-4. Are there regional patterns in sales or customer behavior?
+```
+superstore-streamlit-app/
+├── app/
+│   └── dashboard.py              # Streamlit dashboard app
+├── data/
+│   ├── raw/                      # Original dataset (SuperStoreOrders.csv)
+│   └── cleaned/                  # Cleaned dataset after ETL
+├── docs/
+│   ├── README.md                 # Project documentation
+│   └── user_stories.md
+├── etl/
+│   ├── extract/
+│   │   └── extract.py            # extract_data() function
+│   ├── transform/
+│   │   └── transform.py          # clean_and_transform() function
+│   └── load/
+│       └── load.py              # load_to_csv() function
+├── notebooks/
+│   └── exploratory_analysis.ipynb
+├── scripts/
+│   └── run_etl.py                # Runs full ETL pipeline
+├── tests/
+│   └── unit_tests/               # Unit tests for ETL
+├── requirements.txt              # Python dependencies
+└── setup.py                      # Optional project setup
 
-Data Preprocessing Summary
-Initial Dataset: 
-Rows: 51,290
-Columns: 21
+```
 
-Contains sales, shipping, customer, and product-level information.
+---
 
-Column Standardisation:
-All column names converted to lowercase with underscores for consistency (order_id instead of Order ID).
+###### 🎯 Project Objectives
 
-Data Types Checked:
-Verified data types using .dtypes and .info() to ensure correct parsing (e.g., date columns, sales as float).
+- Extract data from a raw CSV file
+- Clean and transform data using pandas
+- Perform time-based and shipping-related feature engineering
+- Load the cleaned data into a usable format
+- Create a visual dashboard using Streamlit with filters, charts, and data downloads
 
-Sales Column Cleaned:
-Converted from string ("$200.00") to float, removing $ and ,.
+---
 
-Missing Values:
-Initially checked for missing values.
+###### Environment Setup
 
-After preprocessing, no missing values remained in the cleaned dataset.
+###### 1. Create and activate virtual environment
 
-Date Parsing
-Steps Taken:
-Inspected unique values in order_date and ship_date.
+**macOS/Linux:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-Detected mixed formats (DD/MM/YYYY and MM/DD/YYYY).
+**Windows:**
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
 
-Used two-step parsing with dayfirst=True and fallback parsing.
+###### 2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-Dropped rows where both dates could not be parsed.
+---
 
-New Columns Created:
-Column Name	Description
-ship_duration: Number of days between order and shipping dates
-order_month: Month period (e.g. 2023-04) for trend analysis
-order_quarter: Quarter period (e.g. 2023Q2) for seasonal analysis
-order_weekday: Day of the week the order was placed
-shipping_speed: Categorised bin of delivery time (Fast, Slow, etc.)
-profit_margin: Calculated as (profit / sales) * 100
-is_profitable: Boolean indicating whether the sale was profitable
-customer_order_count: Number of orders placed by each customer
+###### How to Run This Project
 
-Data Transformation Functions
-Each transformation function performs a single, testable operation:
+###### Step 1: Run the ETL pipeline
+```bash
+python scripts/run_etl.py
+```
+This extracts, cleans, and saves the data to:
+```
+data/cleaned/cleaned_superstore.csv
+```
 
-Function Name	Description
-clean_column_names()	Standardises column names to lowercase with underscores
-convert_sales_to_float()	Converts sales from string with $/, to float
-parse_dates()	Parses mixed date formats and handles missing values
-calculate_ship_duration()	Computes days between order and ship dates
-bin_shipping_speed()	Categorises shipping speed into 5 bins
-add_time_columns()	Adds order_month, order_quarter, and order_weekday
-calculate_profit_metrics()	Adds profit_margin and is_profitable flags
-add_customer_order_count()	Adds count of orders per customer
+###### Step 2: Launch the Streamlit dashboard
+```bash
+streamlit run app/dashboard.py
+```
 
-Testing Approach
-Area	Method
-ETL functionality	Manually validated with .head(), .info(), .describe()
-Unit Testing	Used pytest for function-level tests in tests/unit_tests/
-Error Handling	Added tests to simulate invalid paths (e.g., permission errors)
-Dashboard behaviour	Interactions validated manually through the Streamlit UI
+---
+
+###### Dashboard Features
+
+- Filter by Region, Ship Mode, and Category
+- Download full or filtered datasets
+- 5 interactive tabs:
+  - Monthly Sales & Profit
+  - Shipping Duration Analysis
+  - Profit vs Sales by Category
+  - Average Sales and Profit by Sub-Category
+  - Top 10 Customers by Sales
+
+---
+
+###### Analytical Questions and Answers
+
+**❓ Which months and years had the highest sales and profit?**  
+→ Q4 (Oct–Dec) typically shows peak performance in both metrics.
+
+**❓ Which shipping mode results in the longest delivery time?**  
+→ Standard Class has the longest average delivery duration.
+
+**❓ Is there a positive correlation between sales and profit?**  
+→ Not always — some products generate high sales with low profit margins.
+
+**❓ Which sub-categories perform best in average sales and profit?**  
+→ Phones and Chairs lead in both metrics.
+
+**❓ Who are the top customers by sales?**  
+→ The dashboard highlights the top 10 customers by revenue.
+
+---
+
+###### Data Transformations
+
+Performed using `clean_and_transform()`:
+- Parse `order_date` and `ship_date`
+- Clean currency columns: `sales`, `profit`, `shipping_cost`
+- Create `order_month`, `order_weekday`, `ship_duration`, and more
+- Keep only relevant features for analysis
+
+---
+
+###### Running Tests
+
+Run unit tests using:
+```bash
+pytest tests/unit_tests/
+```
+
+Tests include:
+- File extraction and format validation
+- Transformation correctness (e.g. shipping duration, date parsing)
+
+---
+
+###### Key Dependencies
+
+- `pandas`
+- `streamlit`
+- `plotly`
+- `pytest`
+
+Install them all with:
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+###### Future Enhancements
+
+- Deploy to Streamlit Community Cloud
+- Add time series forecasting (e.g. Prophet)
+- Improve testing coverage and exception handling
+- Enable Excel/Parquet output formats
+
+---
+
+
+
+Made by **Mitra Fazel**  
+
 

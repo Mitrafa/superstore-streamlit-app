@@ -5,7 +5,7 @@ with open("requirements.txt") as f:
     install_requires = f.read().splitlines()
 
 setup(
-    name="etl_example",
+    name="etl_superstore_pipeline_and_streamlit",
     version="0.1.0",
     description=("An ETL project for extracting, transforming, and loading data."),
     author="Mitra Fazel",

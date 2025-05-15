@@ -1,38 +1,43 @@
 import os
-import pytest
 import pandas as pd
+import pytest
+from pathlib import Path
+
+# Add project root to sys.path
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+
 from etl.load.load import load_to_csv
 
 
-def test_load_to_csv_creates_file(tmp_path):
-    # Sample DataFrame
-    df = pd.DataFrame({
-        'name': ['Alice', 'Bob'],
-        'age': [30, 25]
+# ---------- Test 1: Successful load ---------- #
+def test_load_to_csv_success(tmp_path):
+    # Create a small test DataFrame
+    test_df = pd.DataFrame({
+        "order_id": ["A1", "A2"],
+        "sales": [100.0, 200.0]
     })
 
-    # Temp file path (automatically cleaned by pytest)
-    output_file = tmp_path / "output.csv"
+    # Define output file path inside temp dir
+    output_file = tmp_path / "output" / "test_output.csv"
 
-    # Run function
-    load_to_csv(df, output_file)
+    # Call the function
+    load_to_csv(test_df, str(output_file))
 
-    # Check that the file was created
-    assert os.path.exists(output_file)
+    # Check if file exists
+    assert output_file.exists()
 
-    # Check that the content matches
-    loaded_df = pd.read_csv(output_file)
-    pd.testing.assert_frame_equal(df, loaded_df)
+    # Verify content
+    saved_df = pd.read_csv(output_file)
+    pd.testing.assert_frame_equal(test_df, saved_df)
 
 
+# ---------- Test 2: Invalid path error handling ---------- #
 def test_load_to_csv_invalid_path():
-    # Sample DataFrame
-    df = pd.DataFrame({'a': [1], 'b': [2]})
+    # Create dummy dataframe
+    test_df = pd.DataFrame({"col": [1, 2, 3]})
 
-    # Use an invalid path (e.g., writing to a directory as a file)
-    invalid_path = "/dev/null/output.csv"  # On Unix/macOS: /dev/null is not a directory
-
-    with pytest.raises(Exception) as exc_info:
-        load_to_csv(df, invalid_path)
-
-    assert "Failed to save data" in str(exc_info.value) or isinstance(exc_info.value, (OSError, PermissionError))
+    # Intentionally invalid path (e.g., forbidden root path)
+    with pytest.raises(Exception):
+        load_to_csv(test_df, "/invalid_dir/test.csv")

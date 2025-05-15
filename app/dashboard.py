@@ -23,7 +23,6 @@ cud_palette = [
 def load_data():
     df = pd.read_csv("data/cleaned/cleaned_superstore.csv")
     df['order_date'] = pd.to_datetime(df['order_date'])
-    df['order_month'] = df['order_date'].dt.to_period('M')
     return df
 
 df = load_data()
@@ -83,6 +82,8 @@ else:
         st.subheader("📈 Monthly Sales & Profit Trend")
         monthly_summary = df_filtered.groupby('order_month')[['sales', 'profit']].sum().sort_index().reset_index()
         monthly_summary['order_month'] = monthly_summary['order_month'].astype(str)
+        monthly_summary['sales'] = pd.to_numeric(monthly_summary['sales'], errors='coerce')
+        monthly_summary['profit'] = pd.to_numeric(monthly_summary['profit'], errors='coerce')
 
         fig = px.line(
             monthly_summary, x='order_month', y=['sales', 'profit'],
@@ -125,6 +126,8 @@ else:
     with tab4:
         st.subheader("🛒 Average Sales and Profit by Sub-Category")
         subcat_summary = df_filtered.groupby('sub_category')[['sales', 'profit']].mean().sort_values(by='sales', ascending=False).reset_index()
+        subcat_summary['sales'] = pd.to_numeric(subcat_summary['sales'], errors='coerce')
+        subcat_summary['profit'] = pd.to_numeric(subcat_summary['profit'], errors='coerce')
 
         fig4 = px.bar(
             subcat_summary, x='sub_category', y=['sales', 'profit'],

@@ -14,7 +14,7 @@ def load_to_csv(df: pd.DataFrame, output_path: str) -> None:
     try:
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         df.to_csv(output_path, index=False)
-        print(f"✅ Load Complete. Data successfully saved to: {output_path}")
+        print(f"Load Complete. Data successfully saved to: {output_path}")
     except (OSError, IOError, PermissionError) as e:
         print(f"❌ Failed to save data to {output_path}: {e}")
         raise
