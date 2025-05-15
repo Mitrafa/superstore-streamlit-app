@@ -33,13 +33,14 @@ matplotlib==3.10.3
 matplotlib-inline==0.1.7
 narwhals==1.39.0
 nest-asyncio==1.6.0
-numpy==2.2.5
+numpy==1.23.5
 packaging==24.2
 pandas==2.2.3
 parso==0.8.4
 pexpect==4.9.0
 pillow==11.2.1
 platformdirs==4.3.8
+plotly==6.0.1
 pluggy==1.5.0
 prompt_toolkit==3.0.51
 protobuf==6.30.2
@@ -54,7 +55,6 @@ pytest==8.3.5
 python-dateutil==2.9.0.post0
 pytz==2025.2
 pyzmq==26.4.0
-plotly==5.0.0
 referencing==0.36.2
 requests==2.32.3
 rpds-py==0.24.0
